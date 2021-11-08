@@ -1,15 +1,25 @@
 import axios from 'axios'
 // eslint-disable-next-line no-unused-vars
-const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? `/java` : '/apis',
 
+const service = axios.create({
+  // baseURL: process.env.NODE_ENV === 'production' ? `/java` : '/apis',
+  baseURL: 'http://127.0.0.1:9090',
   headers: {
     get: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      // 'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
+      'X-Powered-By': '3.2.1',
+      'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
+      'Access-Control-Allow-Origin': '*'
       // 在开发中，一般还需要单点登录或者其他功能的通用请求头，可以一并配置进来
     },
     post: {
       'Content-Type': 'application/json;charset=utf-8'
+      // 'X-Powered-By': '3.2.1',
+      // 'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
+      // 'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
+      // 'Access-Control-Allow-Origin': '*'
       // 在开发中，一般还需要单点登录或者其他功能的通用请求头，可以一并配置进来
     }
   },
@@ -20,7 +30,7 @@ const service = axios.create({
     data = JSON.stringify(data)
     return data
   }],
-  validateStatus() {
+  validateStatus () {
     // 使用async-await，处理reject情况较为繁琐，所以全部返回resolve，在业务代码中处理异常
     return true
   },
